@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <style>
+        /* General Body and Background Styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Full-Screen Background */
+        .background-container {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+            filter: brightness(50%); /* Darkens the background */
+            z-index: -1; /* Ensures content is on top */
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Lightened background for form */
+            border-radius: 8px;
+            margin-top: 10%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Textarea and Button Styling */
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Success Message Styling */
+        .success-message {
+            color: green;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Full-Screen Background Image Container -->
+    <div class="background-container"></div>
+
+    <!-- Feedback Form -->
+    <div class="form-container">
+        <h2>Provide Your Feedback</h2>
+        <form method="POST" id="feedback-form">
+            <textarea name="feedback" placeholder="Write your feedback..." required></textarea><br>
+            <button type="submit">Submit Feedback</button>
+        </form>
+        <div class="success-message" id="success-message">
+            Thank you for your feedback! It has been submitted successfully.
+        </div>
+    </div>
+
+    <script>
+        // Array of background images from W3Schools and other public sources
+        const images = [
+            'https://plus.unsplash.com/premium_photo-1670155857330-0f4ecdc918ee?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            'https://images.pexels.com/photos/258149/pexels-photo-258149.jpeg',
+            'https://cdn.pixabay.com/photo/2024/11/23/08/18/christmas-9218404_1280.jpg',
+            'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            'https://unsplash.com/photos/a-man-riding-a-snowboard-down-a-snow-covered-slope-3xw5r1oYYcA',
+            'https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://plus.unsplash.com/premium_photo-1721769390682-3b328b2fe722?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://www.istockphoto.com/photo/3d-emoji-with-smiley-face-gm1207566766-348715759?utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fsmile-ball-3d&utm_medium=affiliate&utm_source=unsplash&utm_term=smile+ball+3d%3A%3A%3A'
+        ];
+        let currentImageIndex = 0;
+
+        // Function to change the background image every 10 seconds
+        function changeBackground() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+        }
+
+        // Initial background setup
+        document.addEventListener("DOMContentLoaded", () => {
+            // Set the first background image
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+            // Start the background image rotation
+            setInterval(changeBackground, 10000);  // Change background every 10 seconds
+        });
+
+        // Handle the form submission (in a real-world scenario, you'd use AJAX for a better user experience)
+        document.getElementById("feedback-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent the form from submitting
+
+            // Display the success message
+            document.getElementById("success-message").style.display = "block";
+
+            // Reset the form
+            setTimeout(function() {
+                document.getElementById("feedback-form").reset();
+                document.getElementById("success-message").style.display = "none";
+            }, 3000); // Hide the message after 3 seconds
+        });
+    </script>
+
+</body>
+</html>

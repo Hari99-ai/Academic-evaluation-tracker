@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Academic Performance Dashboard</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7);
+            z-index: -1;
+        }
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        form {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        input, label {
+            display: block;
+            margin: 10px auto;
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container" style="background-image: url('https://plus.unsplash.com/premium_photo-1670155857330-0f4ecdc918ee?q=80&w=1915&auto=format&fit=crop');"></div>
+    <h1>Student Academic Performance Dashboard</h1>
+    <form action="/predict" method="POST">
+        <label for="study_hours">Study Hours Per Week:</label>
+        <input type="text" id="study_hours" name="study_hours" placeholder="Enter study hours..." required>
+        
+        <label for="attendance">Attendance Percentage:</label>
+        <input type="text" id="attendance" name="attendance" placeholder="Enter attendance percentage..." required>
+        
+        <label for="assignments">Assignments Completed:</label>
+        <input type="text" id="assignments" name="assignments" placeholder="Enter number of assignments completed..." required>
+        
+        <input type="submit" value="Predict">
+    </form>
+
+    <script>
+        const images = [
+            'https://plus.unsplash.com/premium_photo-1670155857330-0f4ecdc918ee?q=80&w=1915&auto=format&fit=crop',
+            'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
+            'https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=1915&auto=format&fit=crop',
+            'https://cdn.pixabay.com/photo/2024/11/23/08/18/christmas-9218404_1280.jpg'
+        ];
+
+        let currentImageIndex = 0;
+
+        function changeBackground() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setInterval(changeBackground, 8000); // Change every 8 seconds
+        });
+    </script>
+</body>
+</html>

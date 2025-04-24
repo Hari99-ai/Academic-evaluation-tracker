@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Student Academic Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        /* Dynamic Background */
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(50%);
+            z-index: -1;
+        }
+
+        /* Main container */
+        .container {
+            width: 350px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            margin: 10% auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .role-selection {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .role-selection label {
+            margin-right: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Container -->
+    <div class="background-container"></div>
+
+    <!-- Login Form -->
+    <div class="container">
+        <h2>Sign In</h2>
+
+        <!-- Flash Messages for Errors -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="error">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Sign-In Form -->
+        <form action="{{ url_for('signin') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="role-selection">
+                <label></label>
+                <input type="radio" name="role" value="admin" required> Admin
+                <input type="radio" name="role" value="user" required> User
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Sign In">
+            </div>
+        </form>
+
+        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+    </div>
+
+    <!-- Background Image Rotation -->
+    <script>
+        const images = [
+            'https://plus.unsplash.com/premium_photo-1670155857330-0f4ecdc918ee?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            'https://images.pexels.com/photos/258149/pexels-photo-258149.jpeg',
+            'https://cdn.pixabay.com/photo/2024/11/23/08/18/christmas-9218404_1280.jpg',
+            'https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+            'https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://plus.unsplash.com/premium_photo-1721769390682-3b328b2fe722?q=80&w=1981&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+        ];
+
+        let currentImageIndex = 0;
+
+        function changeBackground() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+            setInterval(changeBackground, 10000); // Change every 10 seconds
+        });
+    </script>
+</body>
+</html>

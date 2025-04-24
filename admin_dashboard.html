@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-y: auto; /* Allow vertical scrolling */
+        }
+
+        .background-container {
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better contrast */
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 50px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .dashboard-header p {
+            font-size: 18px;
+        }
+
+        .card {
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .card-header {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .list-group-item a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .list-group-item a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .btn-danger {
+            font-size: 16px;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        h2 {
+            color: white;
+            margin-top: 30px;
+        }
+
+        ul {
+            color: white;
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        .row {
+            margin-top: 30px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container"></div>
+    <div class="overlay"></div> <!-- Dark overlay for better contrast -->
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <p>Email: {{ email if email else 'Not Available' }}</p>
+        </div>
+
+        <!-- Admin Functionality Sections -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Manage Users
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{ url_for('signup') }}">Add New User</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ url_for('view_users') }}">View All Users</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Reports Section -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        Performance Reports
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{ url_for('view_reports') }}">View Reports</a>
+                            </li>
+                            
+                            <li class="list-group-item">
+                                <a href="{{ url_for('t') }}">Notification</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Settings Section -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        System Settings
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{ url_for('add_performance') }}">Update Preferences</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#">Manage Security</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            'https://plus.unsplash.com/premium_photo-1670155857330-0f4ecdc918ee?q=80&w=1915&auto=format&fit=crop',
+            'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
+            'https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=1915&auto=format&fit=crop',
+            'https://cdn.pixabay.com/photo/2024/11/23/08/18/christmas-9218404_1280.jpg'
+        ];
+
+        let currentImageIndex = 0;
+
+        function changeBackground() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+            setInterval(changeBackground, 8000); // Change every 8 seconds
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

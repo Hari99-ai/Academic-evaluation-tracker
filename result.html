@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            height: auto; /* Allow content to expand */
+            overflow: auto; /* Enable scrolling */
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .result, .chart-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .suggestion {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            filter: brightness(0.7);
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1rem;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image Container -->
+    <div class="background-container"></div>
+
+    <h1>Performance Dashboard</h1>
+
+    <!-- Prediction Result Section -->
+    <div class="result">
+        <h2>Prediction Result</h2>
+        <p>Predicted Performance: <strong>{{ prediction }}</strong></p>
+        <p class="suggestion">{{ suggestion }}</p>
+    </div>
+
+    <!-- Performance Chart Section -->
+    <div class="chart-container">
+        <h2>Performance Analysis</h2>
+        <canvas id="performanceChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Mock data for testing
+        const performanceData = {
+            "High": 15,
+            "Medium": 8,
+            "Low": 3
+        };
+
+        // Extract labels and values from the mock data
+        const labels = Object.keys(performanceData);
+        const values = Object.values(performanceData);
+
+        // Create the chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Average Study Hours',
+                    data: values,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const images = [
+            'https://plus.unsplash.com/premium_photo-1670155857330-0f4ecdc918ee?q=80&w=1915&auto=format&fit=crop',
+            'https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
+            'https://images.unsplash.com/photo-1502318217862-aa4e294ba657?q=80&w=1915&auto=format&fit=crop',
+            'https://cdn.pixabay.com/photo/2024/11/23/08/18/christmas-9218404_1280.jpg'
+        ];
+
+        let currentImageIndex = 0;
+
+        function changeBackground() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.querySelector('.background-container').style.backgroundImage = `url(${images[currentImageIndex]})`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setInterval(changeBackground, 8000); // Change every 8 seconds
+        });
+    </script>
+
+    <a href="/dashboard">Back to Home</a>
+</body>
+</html>

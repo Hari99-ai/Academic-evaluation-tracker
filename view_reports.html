@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Reports</title>
+</head>
+<body>
+    <h2>Performance Reports</h2>
+
+    {% if performance_data %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Grade</th>
+                    <th>Marks</th>
+                    <th>Study Hours</th>
+                    <th>Attendance</th>
+                    <th>Roll_No</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in performance_data %}
+                    <tr>
+                        <td>{{ report.user_id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ report.grade }}</td>
+                        <td>{{ report.marks }}</td>
+                        <td>{{ report.study_hours }}</td>
+                        <td>{{ report.attendance }}</td>
+                        <td>{{ user.password }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No performance data found!</p>
+    {% endif %}
+</body>
+</html>
